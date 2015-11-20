@@ -10,8 +10,5 @@ https://github.com/ratchetgame98/ServerLove
 # All infomation is found on the plugin Wiki.
 
 Click here to see the [WIKI!](https://github.com/thedeibo/ServerLoveMCPE/wiki/)
-Or join the Chat
-[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/thedeibo/ServerLoveMCPE-CHAT?utm_source=share-link&utm_medium=link&utm_campaign=share-link)
 
-
-
+Lets hope that it gets accepted on the pocketmine.net plugin base
