@@ -38,6 +38,7 @@ class Main extends PluginBase implements Listener{
                 $sender->sendMessage("§5YOU MUST USE THIS COMMAND IN GAME. SORRY.");
                     return true;
                 }
+                
                 $loved = array_shift($args);
                 if($this->nolove->exists(strtolower($loved))){
                     $sender->sendMessage("§5 Sorry, " . $loved . "§5 is not looking to love anyone right now.");
@@ -46,8 +47,9 @@ class Main extends PluginBase implements Listener{
                     $lovedPlayer = $this->getServer()->getPlayer($loved);
                     if($lovedPlayer !== null and $lovedPlayer->isOnline()){
                         $lovedPlayer->sendMessage($sender->getName()."§5 is in love with you!");
-                        $sender->setNameTag($sender->getName() . "- ♥");
-                        $loved->setNameTag($loved->getName() . "- ♥");
+                       /** $sender->setNameTag($sender->getName() . "- ♥");
+                        * WON'T WORK ATM
+                        $loved->setNameTag($loved->getName() . "- ♥"); **/
                         if(isset($args[0])){
                             $lovedPlayer->sendMessage("Reason: " . implode(" ", $args));
                         }
@@ -82,8 +84,9 @@ class Main extends PluginBase implements Listener{
                         }
                         $sender->sendMessage("§5You have broken up with §a" . $loved . "§5.");
                         $this->getServer()->broadcastMessage("§a" . $sender->getName() . " §dhas broken up with §a" . $loved . "§d.");
-                        $sender->setNameTag($sender->getName() . "");
-                        $loved->setNameTag($loved->getName() . "");
+                       /** $sender->setNameTag($sender->getName() . "");
+                        * WON'T WORK ATM
+                        $loved->setNameTag($loved->getName() . ""); **/
                         return true;
                     }else{
                         $sender->sendMessage($loved . "§5 is not avalible for a breakup. Basically, §a" . $loved . "§5 does not exist, or is not online.");
