@@ -34,6 +34,10 @@ class Main extends PluginBase implements Listener{
                 if(!(isset($args[0]))){
                     return false;
                 }
+                if (!($sender instanceof Player)){ 
+                $sender->sendMessage("§5YOU MUST USE THIS COMMAND IN GAME. SORRY.");
+                    return true;
+                }
                 $loved = array_shift($args);
                 if($this->nolove->exists(strtolower($loved))){
                     $sender->sendMessage("§5 Sorry, " . $loved . "§5 is not looking to love anyone right now.");
@@ -42,6 +46,8 @@ class Main extends PluginBase implements Listener{
                     $lovedPlayer = $this->getServer()->getPlayer($loved);
                     if($lovedPlayer !== null and $lovedPlayer->isOnline()){
                         $lovedPlayer->sendMessage($sender->getName()."§5 is in love with you!");
+                        $sender->setNameTag($sender->getName() . "- ♥");
+                        $loved->setNameTag($loved->getName() . "- ♥");
                         if(isset($args[0])){
                             $lovedPlayer->sendMessage("Reason: " . implode(" ", $args));
                         }
@@ -63,6 +69,10 @@ class Main extends PluginBase implements Listener{
                 if(!(isset($args[0]))){
                     return false;
                 }
+                if (!($sender instanceof Player)){ 
+                $sender->sendMessage("§5YOU MUST USE THIS COMMAND IN GAME. SORRY.");
+                    return true;
+                }
                 $loved = array_shift($args);
                     $lovedPlayer = $this->getServer()->getPlayer($loved);
                     if($lovedPlayer !== null and $lovedPlayer->isOnline()){
@@ -72,6 +82,8 @@ class Main extends PluginBase implements Listener{
                         }
                         $sender->sendMessage("§5You have broken up with §a" . $loved . "§5.");
                         $this->getServer()->broadcastMessage("§a" . $sender->getName() . " §dhas broken up with §a" . $loved . "§d.");
+                        $sender->setNameTag($sender->getName() . "");
+                        $loved->setNameTag($loved->getName() . "");
                         return true;
                     }else{
                         $sender->sendMessage($loved . "§5 is not avalible for a breakup. Basically, §a" . $loved . "§5 does not exist, or is not online.");
@@ -86,6 +98,10 @@ class Main extends PluginBase implements Listener{
             case "nolove":
                 if(!(isset($args[0]))){
                     return false;
+                }
+                if (!($sender instanceof Player)){ 
+                $sender->sendMessage("§5YOU MUST USE THIS COMMAND IN GAME. SORRY.");
+                    return true;
                 }
                 if($args[0] == "nolove"){
                     $this->nolove->set(strtolower($sender->getName()));
@@ -108,8 +124,8 @@ class Main extends PluginBase implements Listener{
                 $sender->sendMessage("§5[ServerLoveMCPE] Original ServerLove (For MCPC )  Made By ratchetgame98 ");
                 $sender->sendMessage("§d[ServerLoveMCPE] Usage: /love <playerName>");
                 $sender->sendMessage("§d[ServerLoveMCPE] Usage: /breakup <playerName>");
-                $sender->sendMessage("§5[ServerLoveMCPE] Usage: /nolove <nolove / love> ");
-                $sender->sendMessage("§d[ServerLoveMCPE] Happy Loving!");
+                $sender->sendMessage("§d[ServerLoveMCPE] Usage: /nolove <nolove / love> ");
+                $sender->sendMessage("§5[ServerLoveMCPE] Happy Loving!");
                 return true;
             break;
         default:
