@@ -47,17 +47,24 @@ class Main extends PluginBase implements Listener{
                 }else{
                     $lovedPlayer = $this->getServer()->getPlayer($loved);
                     if($lovedPlayer !== null and $lovedPlayer->isOnline()){
-                        $lovedPlayer->sendMessage($sender->getName()."§5 is in love with you!");
-                       /** $sender->setNameTag($sender->getName() . "- ♥");
-                        * WON'T WORK ATM
-                        $loved->setNameTag($loved->getName() . "- ♥"); **/
-                        if(isset($args[0])){
-                            $lovedPlayer->sendMessage("Reason: " . implode(" ", $args));
+                        if($lovedPlayer == $sender){
+                            //This is where the loop for the #ForeverAlone goes to - by ratchetgame98
+                            //You can personlise the messages to your liking also
+                            $sender->sendMessage("§5[♥]You can't love yourself :P");
+                            $this->getServer()->broadcastMessage($sender->getName() . "§5[♥] §etried to love themselves :P. §6#ForeverAlone");
+                        }else{
+                            $lovedPlayer->sendMessage($sender->getName()."§5 is in love with you!");
+                            /** $sender->setNameTag($sender->getName() . "- ♥");
+                            * WON'T WORK ATM
+                            $loved->setNameTag($loved->getName() . "- ♥"); **/
+                            if(isset($args[0])){
+                                $lovedPlayer->sendMessage("Reason: " . implode(" ", $args));
+                            }
+                            $sender->sendMessage("§5[♥] So you love §a" . $loved . "?§5 Awww, thats nice");
+                            $this->getServer()->broadcastMessage("§a" . $sender->getName() . " §dis in love with §a" . $loved . "§d.");
+                            $this->getServer()->broadcastMessage("§d♥" . $loved . "§d♥" . $sender->getName() . "§d♥");
+                            return true;
                         }
-                        $sender->sendMessage("§5[♥] So you love §a" . $loved . "?§5 Awww, thats nice");
-                        $this->getServer()->broadcastMessage("§a" . $sender->getName() . " §dis in love with §a" . $loved . "§d.");
-                        $this->getServer()->broadcastMessage("§d♥" . $loved . "§d♥" . $sender->getName() . "§d♥");
-                        return true;
                     }else{
                         $sender->sendMessage("§5[♥] §a" . $loved . "§5 is not avalible for love. #shameful. §5 Basically, §a" . $loved . "§5 does not exist, or is not online.");
                         return true;
