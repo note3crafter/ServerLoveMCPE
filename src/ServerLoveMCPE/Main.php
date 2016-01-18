@@ -65,8 +65,11 @@ class Main extends PluginBase implements Listener{
                             $this->getServer()->broadcastMessage("§a" . $sender->getName() . " §dis in love with §a" . $loved . "§d.");
                             $this->getServer()->broadcastMessage("§d♥" . $loved . "§d ♥ " . $sender->getName() . "§d♥");
                             
+                            /*nametag thing */
                             $sender->setDisplayName(TextFormat::LIGHT_PURPLE . "[<3]".$sender->getDisplayName());
                             $lovedPlayer->setDisplayName(TextFormat::LIGHT_PURPLE . "[<3]".$lovedPlayer->getDisplayName());
+                            /*nametag thing */
+                            
                             return true;
                         }
                     }else{
@@ -100,7 +103,7 @@ class Main extends PluginBase implements Listener{
                         
                         /*NAMETAG THING */
                         $sender->setDisplayName(str_replace(TextFormat::LIGHT_PURPLE . "[<3]", "", $sender->getDisplayName()));
-                        $loved->setDisplayName(str_replace(TextFormat::LIGHT_PURPLE . "[<3]", "", $lovedPlayer->getDisplayName()));
+                        $lovedPlayer->setDisplayName(str_replace(TextFormat::LIGHT_PURPLE . "[<3]", "", $lovedPlayer->getDisplayName()));
                          /*NAMETAG THING */
                         
                         return true;
