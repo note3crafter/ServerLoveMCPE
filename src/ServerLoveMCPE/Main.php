@@ -135,7 +135,6 @@ class Main extends PluginBase implements Listener{
                     return true;
                 }else{
                     return false;
-                }
 /**
 *
 *                                   SERVERLOVE
@@ -149,10 +148,29 @@ class Main extends PluginBase implements Listener{
                 $sender->sendMessage("§d[<3][ServerLoveMCPE] Usage: /nolove <nolove / love> ");
                 $sender->sendMessage("§5[<3][ServerLoveMCPE] Happy Loving!");
                 return true;
-            break;
-        default:
-            return false;
+                }else{
+                    if(strtolower($args[0]) == "help") {
+						if(!isset($args[1]) || $args[1] == 1) {
+							$sender->sendMessage(TextFormat::LIGHT_PURPLE . "ServerLoveMCPE Help Page 1 of 4" . TextFormat::DARK_PURPLE . "\n/serverlove\n/This is the main command.\n It only shows the infomation about the plugin.");
+							return true;
+						}
+						if($args[1] == 2) {
+							$sender->sendMessage(TextFormat::LIGHT_PURPLE . "ServerLoveMCPE Help Page 2 of 4" . TextFormat::DARK_PURPLE . "\n/love \nUsage: /love <playerName>\n Allows a player to love another Player");
+							return true;
+                        }
+                        if($args[1] == 3) {
+							$sender->sendMessage(TextFormat::LIGHT_PURPLE . "ServerLoveMCPE Help Page 3 of 4" . TextFormat::DARK_PURPLE . "\n/nolove \nUsage: /nolove <nolove / love>\n Allows the player to toggle if they wish to be loved or not.");
+							return true;
+						}
+                        if($args[1] == 2) {
+							$sender->sendMessage(TextFormat::LIGHT_PURPLE . "ServerLoveMCPE Help Page 4 of 4" . TextFormat::DARK_PURPLE . "\n/breakup \nUsage: /breakup <playerName>\n Allows a player to breakup with another Player");
+							return true;
+						}
+                            } else {
+                            $sender->sendMessage(TextFormat::LIGHT_PURPLE . "ServerLoveMCPE Help Page" . TextFormat::DARK_PURPLE . "\nThey are 4 help pages. \nSimply use /serverlove help <1/2/3/4>");
+							return true;
+                        }
+					}                
         }
-    return false;
     }
 }
