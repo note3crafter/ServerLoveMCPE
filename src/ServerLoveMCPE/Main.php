@@ -64,7 +64,8 @@ class Main extends PluginBase implements Listener{
                             $sender->sendMessage("§5[<3] So you love §a" . $loved . "?§5 Awww, thats nice");
                             $this->getServer()->broadcastMessage("§a" . $sender->getName() . " §dis in love with §a" . $loved . "§d.");
                             $this->getServer()->broadcastMessage("§d♥" . $loved . "§d ♥ " . $sender->getName() . "§d♥");
-                            /** INSERT HEARTS PARTICLE HERE **/
+                            $lovedPlayer->getLevel()->addParticle(new \pocketmine\level\particle\HeartParticle($lovedPlayer));
+                            $sender->getLevel()->addParticle(new \pocketmine\level\particle\HeartParticle($sender));
                             
                             /*nametag thing */
                             $sender->setDisplayName(TextFormat::LIGHT_PURPLE . "[<3]".$sender->getDisplayName());
