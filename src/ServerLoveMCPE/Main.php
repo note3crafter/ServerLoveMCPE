@@ -64,6 +64,7 @@ class Main extends PluginBase implements Listener{
                             $sender->sendMessage("§5[<3] So you love §a" . $loved . "?§5 Awww, thats nice");
                             $this->getServer()->broadcastMessage("§a" . $sender->getName() . " §dis in love with §a" . $loved . "§d.");
                             $this->getServer()->broadcastMessage("§d♥" . $loved . "§d ♥ " . $sender->getName() . "§d♥");
+                            /** INSERT HEARTS PARTICLE HERE **/
                             
                             /*nametag thing */
                             $sender->setDisplayName(TextFormat::LIGHT_PURPLE . "[<3]".$sender->getDisplayName());
@@ -135,6 +136,7 @@ class Main extends PluginBase implements Listener{
                     return true;
                 }else{
                     return false;
+                }
 /**
 *
 *                                   SERVERLOVE
@@ -148,8 +150,9 @@ class Main extends PluginBase implements Listener{
                 $sender->sendMessage("§d[<3][ServerLoveMCPE] Usage: /nolove <nolove / love> ");
                 $sender->sendMessage("§5[<3][ServerLoveMCPE] Happy Loving!");
                 return true;
-                }else{
-                    if(strtolower($args[0]) == "help") {
+            break;
+        default:            
+                if(strtolower($args[0]) == "help") {
 						if(!isset($args[1]) || $args[1] == 1) {
 							$sender->sendMessage(TextFormat::LIGHT_PURPLE . "ServerLoveMCPE Help Page 1 of 4" . TextFormat::DARK_PURPLE . "\n/serverlove\n/This is the main command.\n It only shows the infomation about the plugin.");
 							return true;
@@ -171,6 +174,5 @@ class Main extends PluginBase implements Listener{
 							return true;
                         }
 					}                
-        }
     }
 }
