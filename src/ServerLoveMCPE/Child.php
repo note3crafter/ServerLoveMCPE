@@ -14,7 +14,7 @@ use pocketmine\block\Liquid;
 use pocketmine\utils\TextFormat;
 use ServerLoveMCPE\Main;
 
-abstract class Pets extends Creature {
+abstract class Child extends Creature {
 	
 	protected $owner = null;
 	protected $distanceToOwner = 0;
