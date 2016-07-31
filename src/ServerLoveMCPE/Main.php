@@ -71,9 +71,9 @@ class Main extends PluginBase implements Listener{
         				if (isset($args[1])){
         					unset($args[0]);
         					$name = implode(" ", $args);
-        					$this->getPet($sender->getName())->setNameTag($name);
+        					$this->getPet($player)->setNameTag($name);
         					$sender->sendMessage("Set Name to ".$name);
-        					$data = new Config($this->main->getDataFolder() . "players/" . strtolower($sender->getName()) . ".yml", Config::YAML);
+        					$data = new Config($this->main->getDataFolder() . "players/" . strtolower($player) . ".yml", Config::YAML);
         					$data->set("name", $name); 
         					$data->save();
         				}
@@ -89,7 +89,6 @@ class Main extends PluginBase implements Listener{
                     $sender->sendMessage("§5[<3] YOU MUST USE THIS COMMAND IN GAME. SORRY.");
                     return true;
                 }
-                $p = $sender->getName();
                 if ($data->exists("partner")) {
                     $sender->sendMessage("§5[<3] You already have a boyfriend or girlfriend!");
                 }
@@ -156,7 +155,7 @@ class Main extends PluginBase implements Listener{
                         $lovedPlayer->sendMessage("Reason: " . implode(" ", $args));
                     }
                     $sender->sendMessage("§5[<3] You have broken up with §a" . $loved . "§5.");
-                    $data = new Config($this->getDataFolder() . "players/" . strtolower($sender->getName()) . ".yml", Config::YAML);
+                    $data = new Config($this->getDataFolder() . "players/" . strtolower($player) . ".yml", Config::YAML);
                     $data->remove("partner");
                     $data->save();
                     $data = new Config($this->getDataFolder() . "players/" . strtolower($lovedPlayer->getName()) . ".yml", Config::YAML);
