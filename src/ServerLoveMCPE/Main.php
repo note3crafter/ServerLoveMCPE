@@ -46,6 +46,7 @@ class Main extends PluginBase implements Listener{
         $data = new Config($this->getDataFolder() . "players/" . strtolower($player->getName()) . ".yml", Config::YAML);
         if ($data->exists("partner")) {
             $sender->setDisplayName(TextFormat::LIGHT_PURPLE . "[<3]" . $sender->getDisplayName());
+        }
     }
     
     public function onCommand(CommandSender $sender, Command $command, $label, array $args){
