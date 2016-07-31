@@ -34,9 +34,6 @@ class Main extends PluginBase implements Listener{
     }
     
     public function onDisable(){
-        $player = $event->getPlayer()->getName();
-        $data = new Config($this->getDataFolder() . "players/" . strtolower($player->getName()) . ".yml", Config::YAML);
-        $data->save();
         $this->getLogger()->info(TextFormat::LIGHT_PURPLE . "[<3] You've broken up with the server.");
     }
     public function onJoin(PlayerJoinEvent $event)
