@@ -22,12 +22,10 @@ class Main extends PluginBase implements Listener{
 	public static $isPetChanging;
 	public static $type;
 	
-    public function onLoad()
-    {
+    public function onLoad(){
         $this->getLogger()->info(TextFormat::LIGHT_PURPLE . "ServerLoveMCPE is loading.");
     }
-    public function onEnable()
-    {
+    public function onEnable(){
         $this->getServer()->getPluginManager()->registerEvents($this, $this);
         @mkdir($this->getDataFolder());
         @mkdir($this->getDataFolder() . "players");
@@ -39,27 +37,24 @@ class Main extends PluginBase implements Listener{
     public function onDisable(){
         $this->getLogger()->info(TextFormat::LIGHT_PURPLE . "[<3] You've broken up with the server.");
     }
-    public function onJoin(PlayerJoinEvent $event)
-    {
-        $player = $event->getPlayer();
-        $name = $event->getPlayer()->getName();
-        $data = new Config($this->getDataFolder() . "players/" . strtolower($name) . ".yml", Config::YAML);
+    public function onJoin(PlayerJoinEvent $event){
+        $data = new Config($this->getDataFolder() . "players/" . strtolower($event->getPlayer()->getName()) . ".yml", Config::YAML);
         if ($data->exists("partner")) {
-            $player->setDisplayName(TextFormat::LIGHT_PURPLE . "[<3]" . $sender->getDisplayName());
+            $event->getPlayer()->setDisplayName(TextFormat::LIGHT_PURPLE . "[<3]" . $sender->getDisplayName());
         }
 	if($data->exists("type")){ 
 		$type = $data->get("type");
-		$this->changePet($player, $type);
+		$this->changePet($event->getPlayer(), $type);
 	}
 	if($data->exists("name")){ 
 		$name = $data->get("name");
-		$this->getPet($player->getName())->setNameTag($name);
+		$this->getPet($event->getPlayer()->getName())->setNameTag($name);
 	}
     }
     
     public function onCommand(CommandSender $sender, Command $command, $label, array $args){
     	$player = $sender->getName();
-        $data = new Config($this->getDataFolder() . "players/" . strtolower($player) . ".yml", Config::YAML);
+        $data = new Config($this->getDataFolder() . "players/" . strtolower($sender->getName()) . ".yml", Config::YAML);
         switch ($command->getName()) {
             case "child":
                 if ($data->exists("partner")) {
@@ -71,9 +66,9 @@ class Main extends PluginBase implements Listener{
         				if (isset($args[1])){
         					unset($args[0]);
         					$name = implode(" ", $args);
-        					$this->getPet($player)->setNameTag($name);
+        					$this->getPet($sender->getName()->setNameTag($name);
         					$sender->sendMessage("Set Name to ".$name);
-        					$data = new Config($this->main->getDataFolder() . "players/" . strtolower($player) . ".yml", Config::YAML);
+        					$data = new Config($this->main->getDataFolder() . "players/" . strtolower($sender->getName()) . ".yml", Config::YAML);
         					$data->set("name", $name); 
         					$data->save();
         				}
@@ -105,20 +100,20 @@ class Main extends PluginBase implements Listener{
                             //This is where the loop for the #ForeverAlone goes to - by ratchetgame98 - Original ServerLove ( MCPC ) owner!
                             $sender->sendMessage("§5[<3]You can't love yourself :P");
                         } else {
-                            $lovedPlayer->sendMessage("§5[<3]§a" . $player . "§5is in love with you!");
+                            $lovedPlayer->sendMessage("§5[<3]§a" . $sender->getName() . "§5is in love with you!");
                             if (isset($args[0])) {
                                 $lovedPlayer->sendMessage("Reason: " . implode(" ", $args));
                             }
                             $sender->sendMessage("§5[<3] So you love §a" . $loved . "?§5 Awww, thats nice");
-                            $this->getServer()->broadcastMessage("§a" . $player . " §dis in love with §a" . $loved . "§d.");
+                            $this->getServer()->broadcastMessage("§a" . $sender->getName() . " §dis in love with §a" . $loved . "§d.");
                             $lovedPlayer->getLevel()->addParticle(new \pocketmine\level\particle\HeartParticle($lovedPlayer));
                             $sender->getLevel()->addParticle(new \pocketmine\level\particle\HeartParticle($sender));
                             //sava data
-                            $data = new Config($this->getDataFolder() . "players/" . strtolower($player) . ".yml", Config::YAML);
+                            $data = new Config($this->getDataFolder() . "players/" . strtolower($sender->getName()) . ".yml", Config::YAML);
                             $data->set("partner", $lovedPlayer->getName());
                             $data->save();
                             $data = new Config($this->getDataFolder() . "players/" . strtolower($lovedPlayer->getName()) . ".yml", Config::YAML);
-                            $data->set("partner", $player);
+                            $data->set("partner", $sender->getName());
                             $data->save();
 
                             /*nametag thing */
