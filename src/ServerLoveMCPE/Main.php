@@ -275,7 +275,6 @@ class Main extends PluginBase implements Listener{
 				$type = self::$type[$player->getName()];
 			}
  			$type = "BabyVillager"
- 			}
 			$pet = $this->create($player,$type, $source);
 			return $pet;
  		}
