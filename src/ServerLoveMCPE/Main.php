@@ -258,6 +258,7 @@ class Main extends PluginBase implements Listener{
 		$data->set("type", $type); 
 		$data->save();
 		$pet->setOwner($player);
+		$pet->setDataFlag(self::DATA_FLAG_BABY)
 		$pet->spawnToAll();
 		return $pet; 
 	}
@@ -273,20 +274,7 @@ class Main extends PluginBase implements Listener{
 			if (isset(self::$type[$player->getName()])){
 				$type = self::$type[$player->getName()];
 			}
- 			switch ($type){
- 				case "WolfPet":
- 				break;
- 				case "RabbitPet":
- 				break;
- 				case "PigPet":
- 				break;
- 				case "OcelotPet":
- 				break;
- 				case "ChickenPet":
- 				break;
- 				default:
- 					$pets = array("OcelotPet", "PigPet", "WolfPet",  "RabbitPet", "ChickenPet");
- 					$type = $pets[rand(0, 5)];
+ 			$type = "BabyVillager"
  			}
 			$pet = $this->create($player,$type, $source);
 			return $pet;
