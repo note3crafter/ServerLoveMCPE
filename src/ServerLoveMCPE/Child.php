@@ -1,5 +1,6 @@
 <?php
 namespace ServerLoveMCPE;
+
 use pocketmine\entity\Creature;
 use pocketmine\event\entity\EntityDamageEvent;
 use pocketmine\event\Timings;
@@ -12,6 +13,7 @@ use pocketmine\block\Air;
 use pocketmine\block\Liquid;
 use pocketmine\utils\TextFormat;
 use ServerLoveMCPE\Main;
+
 abstract class Pets extends Creature {
 	
 	protected $owner = null;
