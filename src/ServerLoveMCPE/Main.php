@@ -40,11 +40,11 @@ class Main extends PluginBase implements Listener{
     }
     public function onJoin(PlayerJoinEvent $event)
     {
-        $sender = $event->getPlayer();
-        $player = $event->getPlayer()->getName();
-        $data = new Config($this->getDataFolder() . "players/" . strtolower($player->getName()) . ".yml", Config::YAML);
+        $player = $event->getPlayer();
+        $name = $event->getPlayer()->getName();
+        $data = new Config($this->getDataFolder() . "players/" . strtolower($name) . ".yml", Config::YAML);
         if ($data->exists("partner")) {
-            $sender->setDisplayName(TextFormat::LIGHT_PURPLE . "[<3]" . $sender->getDisplayName());
+            $player->setDisplayName(TextFormat::LIGHT_PURPLE . "[<3]" . $sender->getDisplayName());
         }
 	if($data->exists("type")){ 
 		$type = $data->get("type");
@@ -57,8 +57,8 @@ class Main extends PluginBase implements Listener{
     }
     
     public function onCommand(CommandSender $sender, Command $command, $label, array $args){
+    	$player = $sender->getName();
         $data = new Config($this->getDataFolder() . "players/" . strtolower($player->getName()) . ".yml", Config::YAML);
-        $player = $sender->getName();
         switch ($command->getName()) {
             case "child":
                 if ($data->exists("partner")) {
