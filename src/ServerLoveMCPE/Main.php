@@ -153,10 +153,12 @@ class Main extends PluginBase implements Listener
                 if ($args[0] == "nolove") {
                     $data = new Config($this->getDataFolder() . "players/" . strtolower($sender->getName()) . ".yml", Config::YAML);
                     $data->set("nolove", "true");
+                    $data->save();
                     $sender->sendMessage("§5[<3] You will no longer be loved. §e#ForEverAlone");
                     return true;
                 } elseif ($args[0] == "love") {
                     $data->remove("nolove");
+                    $data->save();
                     $sender->sendMessage("§5[<3] You will now be loved again! §e#GetInThere");
                     return true;
                 } else {
