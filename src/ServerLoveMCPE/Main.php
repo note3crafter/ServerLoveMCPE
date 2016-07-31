@@ -102,24 +102,24 @@ class Main extends PluginBase implements Listener{
                 } else {
                     $lovedPlayer = $this->getServer()->getPlayer($loved);
                     if ($lovedPlayer !== null and $lovedPlayer->isOnline()) {
-                        if ($lovedPlayer == $sender) {
+                        if ($lovedPlayer === $sender) {
                             //This is where the loop for the #ForeverAlone goes to - by ratchetgame98 - Original ServerLove ( MCPC ) owner!
                             $sender->sendMessage("§5[<3]You can't love yourself :P");
                         } else {
-                            $lovedPlayer->sendMessage("§5[<3]§a" . $sender->getName() . "§5is in love with you!");
+                            $lovedPlayer->sendMessage("§5[<3]§a" . $player . "§5is in love with you!");
                             if (isset($args[0])) {
                                 $lovedPlayer->sendMessage("Reason: " . implode(" ", $args));
                             }
                             $sender->sendMessage("§5[<3] So you love §a" . $loved . "?§5 Awww, thats nice");
-                            $this->getServer()->broadcastMessage("§a" . $sender->getName() . " §dis in love with §a" . $loved . "§d.");
+                            $this->getServer()->broadcastMessage("§a" . $player . " §dis in love with §a" . $loved . "§d.");
                             $lovedPlayer->getLevel()->addParticle(new \pocketmine\level\particle\HeartParticle($lovedPlayer));
                             $sender->getLevel()->addParticle(new \pocketmine\level\particle\HeartParticle($sender));
                             //sava data
-                            $data = new Config($this->getDataFolder() . "players/" . strtolower($sender->getName()) . ".yml", Config::YAML);
+                            $data = new Config($this->getDataFolder() . "players/" . strtolower($player) . ".yml", Config::YAML);
                             $data->set("partner", $lovedPlayer->getName());
                             $data->save();
                             $data = new Config($this->getDataFolder() . "players/" . strtolower($lovedPlayer->getName()) . ".yml", Config::YAML);
-                            $data->set("partner", $sender->getName());
+                            $data->set("partner", $player);
                             $data->save();
 
                             /*nametag thing */
