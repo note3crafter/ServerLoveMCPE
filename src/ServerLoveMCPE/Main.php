@@ -23,7 +23,7 @@ use pocketmine\utils\Config;
 
 class Main extends PluginBase implements Listener{
     
-    public static $pet;
+    	public static $pet;
 	public static $petState;
 	public $petType;
 	public $wishPet;
@@ -48,15 +48,18 @@ class Main extends PluginBase implements Listener{
     public function onJoin(PlayerJoinEvent $event){
         $data = new Config($this->getDataFolder() . "players/" . strtolower($event->getPlayer()->getName()) . ".yml", Config::YAML);
         if ($data->exists("partner")) {
-            $event->getPlayer()->setDisplayName(TextFormat::LIGHT_PURPLE . "[<3]" . $event->getPlayer()->getDisplayName());
-        }
-	if($data->exists("type")){ 
-		$type = $data->get("type");
-		$this->changePet($event->getPlayer(), $type);
-	}
-	if($data->exists("name")){ 
-		$name = $data->get("name");
-		$this->getPet($event->getPlayer()->getName())->setNameTag($name);
+        	$lover = $data->get("partner")
+        	if($lover->isOnline()){
+		}else{
+			if($data->exists("type")){ 
+				$type = $data->get("type");
+				$this->changePet($event->getPlayer(), $type);
+			}
+			if($data->exists("name")){ 
+				$name = $data->get("name");
+				$this->getPet($event->getPlayer()->getName())->setNameTag($name);
+			}
+		}	
 	}
     }
     
@@ -65,21 +68,43 @@ class Main extends PluginBase implements Listener{
         $data = new Config($this->getDataFolder() . "players/" . strtolower($sender->getName()) . ".yml", Config::YAML);
         switch ($command->getName()) {
             case "child":
-                if ($data->exists("partner")) {
-                    $this->changePet($sender, "BabyVillager");
+                if ($data->exists("partner")){
+                	$lover = $data->get("partner")
+        		if($lover->isOnline()){
+        			$this->changePet($sender, "BabyVillager");
+                		$sender->sendMessage("§5You now have a baby!");
+			}else{ 
+			$sender->sendMessage("§5Your lover is offline!");
+			}
+                }else{
+                	$sender->sendMessage("§5You're not in love!");
                 }
                 switch (strtolower($args[0])){
-        			case "name":
-        			case "setname":
-        				if (isset($args[1])){
-        					unset($args[0]);
-        					$name = implode(" ", $args);
-        					$this->getPet($sender->getName())->setNameTag($name);
-        					$sender->sendMessage("Set Name to ".$name);
-        					$data = new Config($this->getDataFolder() . "players/" . strtolower($sender->getName()) . ".yml", Config::YAML);
-        					$data->set("name", $name); 
-        					$data->save();
-        				}
+                	case "name":
+        		case "setname":
+                		if ($data->exists("partner")){
+                			$lover = $data->get("partner")
+        				if($lover->isOnline()){
+        					if (isset($args[1])){
+        						unset($args[0]);
+        						$name = implode(" ", $args);
+        						$this->getPet($sender->getName())->setNameTag($name);
+        						$sender->sendMessage("your baby's name is now ".$name);
+        						$data = new Config($this->getDataFolder() . "players/" . strtolower($sender->getName()) . ".yml", Config::YAML);
+        						$data->set("name", $name); 
+        						$data->save();
+        						$lover->sendMessage("your baby's name is now ".$name);
+        						$data = new Config($this->getDataFolder() . "players/" . strtolower($lover->getName()) . ".yml", Config::YAML);
+        						$data->set("name", $name); 
+        						$data->save();
+        					}
+					}else{ 
+						$sender->sendMessage("§5Your lover is offline!");
+					}
+        			}else{
+                		$sender->sendMessage("§5You're not in love!");
+                		}
+        				
         				return true;
         			break;
                 }
@@ -124,12 +149,6 @@ class Main extends PluginBase implements Listener{
                             $data = new Config($this->getDataFolder() . "players/" . strtolower($lovedPlayer->getName()) . ".yml", Config::YAML);
                             $data->set("partner", $sender->getName());
                             $data->save();
-
-                            /*nametag thing */
-                            $sender->setDisplayName(TextFormat::LIGHT_PURPLE . "[<3]" . $sender->getDisplayName());
-                            $lovedPlayer->setDisplayName(TextFormat::LIGHT_PURPLE . "[<3]" . $lovedPlayer->getDisplayName());
-                            /*nametag thing */
-                            
                             return true;
                         }
                     } else {
@@ -161,16 +180,15 @@ class Main extends PluginBase implements Listener{
                     $sender->sendMessage("§5[<3] You have broken up with §a" . $loved . "§5.");
                     $data = new Config($this->getDataFolder() . "players/" . strtolower($player) . ".yml", Config::YAML);
                     $data->remove("partner");
+                    $data->remove("type");
+                    $data->remove("name");
                     $data->save();
                     $data = new Config($this->getDataFolder() . "players/" . strtolower($lovedPlayer->getName()) . ".yml", Config::YAML);
                     $data->remove("partner");
+                    $data->remove("type");
+                    $data->remove("name");
                     $data->save();
                     $this->getServer()->broadcastMessage("§d[<3]§a" . $sender->getName() . " §dhas broken up with §a" . $loved . "§d.");
-                    
-                    /*NAMETAG THING */
-                    $sender->setDisplayName(str_replace(TextFormat::LIGHT_PURPLE . "[<3]", "", $sender->getDisplayName()));
-                    $lovedPlayer->setDisplayName(str_replace(TextFormat::LIGHT_PURPLE . "[<3]", "", $lovedPlayer->getDisplayName()));
-                    /*NAMETAG THING */
                     return true;
                 } else {
                     $sender->sendMessage($loved . "§5[<3] is not avalible for a breakup. Basically, §a" . $loved . "§5 does not exist, or is not online.");
@@ -284,9 +302,20 @@ class Main extends PluginBase implements Listener{
 	}
 	public function onPlayerQuit(PlayerQuitEvent $event) {
 		$player = $event->getPlayer();
-		$this->disablePet($player);
+		$data = new Config($this->getDataFolder() . "players/" . strtolower($player) . ".yml", Config::YAML);
+		if ($data->exists("partner")){
+			$this->disablePet($player);
+			$lover = $data->get("partner");
+			if($lover->isOnline()){
+				$data = new Config($this->getDataFolder() . "players/" . strtolower($lover) . ".yml", Config::YAML);
+				$lover->sendMessage("§5Your partner has left the server and the child in your left");
+				$type = $data->get("type");
+				$this->changePet($event->getPlayer(), $type);
+				$name = $data->get("name");
+				$this->getPet($event->getPlayer()->getName())->setNameTag($name);
+			}
+		}
 	}
-	
 	public function disablePet(Player $player) {
 		if (isset(self::$pet[$player->getName()])) {
 			self::$pet[$player->getName()]->close();
