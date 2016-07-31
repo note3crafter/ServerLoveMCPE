@@ -76,7 +76,7 @@ class Main extends PluginBase implements Listener{
         					$name = implode(" ", $args);
         					$this->getPet($sender->getName())->setNameTag($name);
         					$sender->sendMessage("Set Name to ".$name);
-        					$data = new Config($this->main->getDataFolder() . "players/" . strtolower($sender->getName()) . ".yml", Config::YAML);
+        					$data = new Config($this->getDataFolder() . "players/" . strtolower($sender->getName()) . ".yml", Config::YAML);
         					$data->set("name", $name); 
         					$data->save();
         				}
