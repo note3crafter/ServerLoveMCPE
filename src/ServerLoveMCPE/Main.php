@@ -11,8 +11,15 @@ use pocketmine\Server;
 use pocketmine\utils\TextFormat;
 use pocketmine\utils\Config;
 
-class Main extends PluginBase implements Listener
-{
+class Main extends PluginBase implements Listener{
+    
+    public static $pet;
+	public static $petState;
+	public $petType;
+	public $wishPet;
+	public static $isPetChanging;
+	public static $type;
+	
     public function onLoad()
     {
         $this->getLogger()->info(TextFormat::LIGHT_PURPLE . "ServerLoveMCPE is loading.");
@@ -22,6 +29,7 @@ class Main extends PluginBase implements Listener
         $this->getServer()->getPluginManager()->registerEvents($this, $this);
         @mkdir($this->getDataFolder() . "players");
         $this->saveDefaultConfig();
+        Entity::registerEntity(BabyVillager::class);
         $this->getLogger()->info(TextFormat::LIGHT_PURPLE . "[<3] Yayyy, ServerLoveMCPE is ready for love on Version " . $this->getDescription()->getVersion());
     }
     
@@ -44,6 +52,25 @@ class Main extends PluginBase implements Listener
         $data = new Config($this->getDataFolder() . "players/" . strtolower($player->getName()) . ".yml", Config::YAML);
         $player = $sender->getName();
         switch ($command->getName()) {
+            case "child":
+                if ($data->exists("partner")) {
+                    $this->changePet($sender, "BabyVillager");
+                }
+                switch (strtolower($args[0])){
+        			case "name":
+        			case "setname":
+        				if (isset($args[1])){
+        					unset($args[0]);
+        					$name = implode(" ", $args);
+        					$this->getPet($sender->getName())->setNameTag($name);
+        					$sender->sendMessage("Set Name to ".$name);
+        					$data = new Config($this->main->getDataFolder() . "players/" . strtolower($sender->getName()) . ".yml", Config::YAML);
+        					$data->set("name", $name); 
+        					$data->save();
+        				}
+        				return true;
+        			break;
+                }
             case "love":
                 if (!(isset($args[0]))) {
                     return false;
@@ -200,4 +227,96 @@ class Main extends PluginBase implements Listener
                 }
         }
     }
-}
+    public function create($player,$type, Position $source, ...$args) {
+		$chunk = $source->getLevel()->getChunk($source->x >> 4, $source->z >> 4, true);
+		$nbt = new CompoundTag("", [
+			"Pos" => new ListTag("Pos", [
+				new DoubleTag("", $source->x),
+				new DoubleTag("", $source->y),
+				new DoubleTag("", $source->z)
+					]),
+			"Motion" => new ListTag("Motion", [
+				new DoubleTag("", 0),
+				new DoubleTag("", 0),
+				new DoubleTag("", 0)
+					]),
+			"Rotation" => new ListTag("Rotation", [
+				new FloatTag("", $source instanceof Location ? $source->yaw : 0),
+				new FloatTag("", $source instanceof Location ? $source->pitch : 0)
+					]),
+		]);
+		$pet = Entity::createEntity($type, $chunk, $nbt, ...$args);
+		$data = new Config($this->getDataFolder() . "players/" . strtolower($player->getName()) . ".yml", Config::YAML);
+		$data->set("type", $type); 
+		$data->save();
+		$pet->setOwner($player);
+		$pet->spawnToAll();
+		return $pet; 
+	}
+
+	public function createPet(Player $player, $type, $holdType = "") {
+ 		if (isset($this->pet[$player->getName()]) != true) {	
+			$len = rand(8, 12); 
+			$x = (-sin(deg2rad($player->yaw))) * $len  + $player->getX();
+			$z = cos(deg2rad($player->yaw)) * $len  + $player->getZ();
+			$y = $player->getLevel()->getHighestBlockAt($x, $z);
+
+			$source = new Position($x , $y + 2, $z, $player->getLevel());
+			if (isset(self::$type[$player->getName()])){
+				$type = self::$type[$player->getName()];
+			}
+ 			switch ($type){
+ 				case "WolfPet":
+ 				break;
+ 				case "RabbitPet":
+ 				break;
+ 				case "PigPet":
+ 				break;
+ 				case "OcelotPet":
+ 				break;
+ 				case "ChickenPet":
+ 				break;
+ 				default:
+ 					$pets = array("OcelotPet", "PigPet", "WolfPet",  "RabbitPet", "ChickenPet");
+ 					$type = $pets[rand(0, 5)];
+ 			}
+			$pet = $this->create($player,$type, $source);
+			return $pet;
+ 		}
+	}
+
+	public function onPlayerQuit(PlayerQuitEvent $event) {
+		$player = $event->getPlayer();
+		$this->disablePet($player);
+	}
+	
+	public function disablePet(Player $player) {
+		if (isset(self::$pet[$player->getName()])) {
+			self::$pet[$player->getName()]->close();
+			self::$pet[$player->getName()] = null;
+		}
+	}
+	
+	public function changePet(Player $player, $newtype){
+		$type = $newtype;
+		$this->disablePet($player);
+		self::$pet[$player->getName()] = $this->createPet($player, $newtype);
+	}
+	
+	public function getPet($player) {
+		return self::$pet[$player];
+	}
+	
+	public function onJoin(PlayerJoinEvent $event){
+		$player = $event->getPlayer();
+		$data = new Config($this->getDataFolder() . "players/" . strtolower($player->getName()) . ".yml", Config::YAML);
+		if($data->exists("type")){ 
+			$type = $data->get("type");
+			$this->changePet($player, $type);
+		}
+		if($data->exists("name")){ 
+			$name = $data->get("name");
+			$this->getPet($player->getName())->setNameTag($name);
+		}
+	}
+}    
