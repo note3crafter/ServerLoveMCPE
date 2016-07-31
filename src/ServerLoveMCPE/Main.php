@@ -48,7 +48,7 @@ class Main extends PluginBase implements Listener{
     public function onJoin(PlayerJoinEvent $event){
         $data = new Config($this->getDataFolder() . "players/" . strtolower($event->getPlayer()->getName()) . ".yml", Config::YAML);
         if ($data->exists("partner")) {
-        	$lover = $data->get("partner");
+        	$lover = $event->getPlayer()->getName($data->get("partner"));
         	if($lover->isOnline()){
 		}else{
 			if($data->exists("type")){ 
@@ -69,7 +69,7 @@ class Main extends PluginBase implements Listener{
         switch ($command->getName()) {
             case "child":
                 if ($data->exists("partner")){
-                	$lover = $data->get("partner");
+                	$lover = $event->getPlayer()->getName($data->get("partner"));
         		if($lover->isOnline()){
         			$this->changePet($sender, "BabyVillager");
                 		$sender->sendMessage("§5You now have a baby!");
@@ -83,7 +83,7 @@ class Main extends PluginBase implements Listener{
                 	case "name":
         		case "setname":
                 		if ($data->exists("partner")){
-                			$lover = $data->get("partner");
+                			$lover = $event->getPlayer()->getName($data->get("partner"));
         				if($lover->isOnline()){
         					if (isset($args[1])){
         						unset($args[0]);
