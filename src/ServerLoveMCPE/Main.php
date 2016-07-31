@@ -80,6 +80,7 @@ class Main extends PluginBase implements Listener{
         				return true;
         			break;
                 }
+                break
             case "love":
                 if (!(isset($args[0]))) {
                     return false;
