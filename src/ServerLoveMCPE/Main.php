@@ -269,12 +269,11 @@ class Main extends PluginBase implements Listener{
 			$x = (-sin(deg2rad($player->yaw))) * $len  + $player->getX();
 			$z = cos(deg2rad($player->yaw)) * $len  + $player->getZ();
 			$y = $player->getLevel()->getHighestBlockAt($x, $z);
-
 			$source = new Position($x , $y + 2, $z, $player->getLevel());
 			if (isset(self::$type[$player->getName()])){
 				$type = self::$type[$player->getName()];
 			}
- 			$type = "BabyVillager"
+			$type = "BabyVillager";
 			$pet = $this->create($player,$type, $source);
 			return $pet;
  		}
