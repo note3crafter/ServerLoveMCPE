@@ -89,7 +89,8 @@ class Main extends PluginBase implements Listener{
                 }
                 
                 $loved = array_shift($args);
-                $data = new Config($this->getDataFolder() . "players/" . strtolower($loved) . ".yml", Config::YAML);
+                $lovedPlayer = $this->getServer()->getPlayer($loved);
+                $data = new Config($this->getDataFolder() . "players/" . strtolower($lovedPlayer) . ".yml", Config::YAML);
                 if ($data->exists("nolove")) {
                     $sender->sendMessage("§5[<3]Sorry, " . $loved . "§5 is not looking to love anyone right now.");
                     return true;
@@ -142,7 +143,7 @@ class Main extends PluginBase implements Listener{
                     $sender->sendMessage("§5[<3] YOU MUST USE THIS COMMAND IN GAME. SORRY.");
                     return true;
                 }
-                $loved       = array_shift($args);
+                $loved = array_shift($args);
                 $lovedPlayer = $this->getServer()->getPlayer($loved);
                 if ($lovedPlayer !== null and $lovedPlayer->isOnline()) {
                     $lovedPlayer->sendMessage("§5[<3]§a" . $sender->getName() . "§5has broken up with you!");
