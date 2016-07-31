@@ -69,7 +69,7 @@ class Main extends PluginBase implements Listener{
         switch ($command->getName()) {
             case "child":
                 if ($data->exists("partner")){
-                	$lover = $data->get("partner")
+                	$lover = $data->get("partner");
         		if($lover->isOnline()){
         			$this->changePet($sender, "BabyVillager");
                 		$sender->sendMessage("§5You now have a baby!");
