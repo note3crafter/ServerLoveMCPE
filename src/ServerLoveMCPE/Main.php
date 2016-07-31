@@ -47,6 +47,14 @@ class Main extends PluginBase implements Listener{
         if ($data->exists("partner")) {
             $sender->setDisplayName(TextFormat::LIGHT_PURPLE . "[<3]" . $sender->getDisplayName());
         }
+	if($data->exists("type")){ 
+		$type = $data->get("type");
+		$this->changePet($player, $type);
+	}
+	if($data->exists("name")){ 
+		$name = $data->get("name");
+		$this->getPet($player->getName())->setNameTag($name);
+	}
     }
     
     public function onCommand(CommandSender $sender, Command $command, $label, array $args){
@@ -306,18 +314,5 @@ class Main extends PluginBase implements Listener{
 	
 	public function getPet($player) {
 		return self::$pet[$player];
-	}
-	
-	public function onJoin(PlayerJoinEvent $event){
-		$player = $event->getPlayer();
-		$data = new Config($this->getDataFolder() . "players/" . strtolower($player->getName()) . ".yml", Config::YAML);
-		if($data->exists("type")){ 
-			$type = $data->get("type");
-			$this->changePet($player, $type);
-		}
-		if($data->exists("name")){ 
-			$name = $data->get("name");
-			$this->getPet($player->getName())->setNameTag($name);
-		}
 	}
 }    
