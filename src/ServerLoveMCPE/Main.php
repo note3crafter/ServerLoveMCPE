@@ -279,7 +279,6 @@ class Main extends PluginBase implements Listener{
 			return $pet;
  		}
 	}
-
 	public function onPlayerQuit(PlayerQuitEvent $event) {
 		$player = $event->getPlayer();
 		$this->disablePet($player);
