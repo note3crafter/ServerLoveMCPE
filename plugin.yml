@@ -12,7 +12,7 @@ commands:
   aliases: [sl, loveserver]
   permission: serverlovemcpe.serverlove
  child:
-  description: §a Love a player
+  description: §a Make a child
   usage: "§a/child"
   permission: serverlovemcpe.child
  love:
@@ -45,5 +45,5 @@ permissions:
   description: "§aAllows the user to be / not to be loved."
   default: true
    serverlovemcpe.child:
-  description: "§aAllows the user to be / not to be loved."
+  description: "§aAllows you to make a child"
   default: true
