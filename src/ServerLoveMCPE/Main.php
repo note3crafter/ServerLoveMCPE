@@ -263,7 +263,6 @@ class Main extends PluginBase implements Listener{
 		$data->set("type", $type); 
 		$data->save();
 		$pet->setOwner($player);
-		$pet->setDataFlag(self::DATA_FLAG_BABY);
 		$pet->spawnToAll();
 		return $pet; 
 	}
