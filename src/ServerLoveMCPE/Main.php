@@ -58,7 +58,7 @@ class Main extends PluginBase implements Listener{
     
     public function onCommand(CommandSender $sender, Command $command, $label, array $args){
     	$player = $sender->getName();
-        $data = new Config($this->getDataFolder() . "players/" . strtolower($player->getName()) . ".yml", Config::YAML);
+        $data = new Config($this->getDataFolder() . "players/" . strtolower($player) . ".yml", Config::YAML);
         switch ($command->getName()) {
             case "child":
                 if ($data->exists("partner")) {
