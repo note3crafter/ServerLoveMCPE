@@ -48,7 +48,7 @@ class Main extends PluginBase implements Listener{
     public function onJoin(PlayerJoinEvent $event){
         $data = new Config($this->getDataFolder() . "players/" . strtolower($event->getPlayer()->getName()) . ".yml", Config::YAML);
         if ($data->exists("partner")) {
-        	$lover = $data->get("partner")
+        	$lover = $data->get("partner");
         	if($lover->isOnline()){
 		}else{
 			if($data->exists("type")){ 
