@@ -89,7 +89,7 @@ class Main extends PluginBase implements Listener{
                 }
                 
                 $loved = array_shift($args);
-                $data = new Config($this->getDataFolder() . "players/" . strtolower($loved->getName()) . ".yml", Config::YAML);
+                $data = new Config($this->getDataFolder() . "players/" . $loved->getName() . ".yml", Config::YAML);
                 if ($data->exists("nolove")) {
                     $sender->sendMessage("§5[<3]Sorry, " . $loved . "§5 is not looking to love anyone right now.");
                     return true;
