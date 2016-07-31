@@ -10,6 +10,8 @@ use pocketmine\Player;
 use pocketmine\entity\Entity;
 use pocketmine\plugin\PluginBase;
 use pocketmine\Server;
+use pocketmine\level\Location;
+use pocketmine\level\Position;
 use pocketmine\utils\TextFormat;
 use pocketmine\utils\Config;
 
@@ -40,7 +42,7 @@ class Main extends PluginBase implements Listener{
     public function onJoin(PlayerJoinEvent $event){
         $data = new Config($this->getDataFolder() . "players/" . strtolower($event->getPlayer()->getName()) . ".yml", Config::YAML);
         if ($data->exists("partner")) {
-            $event->getPlayer()->setDisplayName(TextFormat::LIGHT_PURPLE . "[<3]" . $sender->getDisplayName());
+            $event->getPlayer()->setDisplayName(TextFormat::LIGHT_PURPLE . "[<3]" . $event->getPlayer()->getDisplayName());
         }
 	if($data->exists("type")){ 
 		$type = $data->get("type");
