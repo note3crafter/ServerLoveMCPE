@@ -83,7 +83,7 @@ class Main extends PluginBase implements Listener{
                 	case "name":
         		case "setname":
                 		if ($data->exists("partner")){
-                			$lover = $data->get("partner")
+                			$lover = $data->get("partner");
         				if($lover->isOnline()){
         					if (isset($args[1])){
         						unset($args[0]);
