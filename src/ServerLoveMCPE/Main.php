@@ -305,7 +305,7 @@ class Main extends PluginBase implements Listener{
 		$data = new Config($this->getDataFolder() . "players/" . strtolower($player) . ".yml", Config::YAML);
 		if ($data->exists("partner")){
 			$this->disablePet($player);
-			$lover = $data->get("partner");
+			$lover = $event->getPlayer()->getName($data->get("partner"));
 			if($lover->isOnline()){
 				$data = new Config($this->getDataFolder() . "players/" . strtolower($lover) . ".yml", Config::YAML);
 				$lover->sendMessage("§5Your partner has left the server and the child in your left");
