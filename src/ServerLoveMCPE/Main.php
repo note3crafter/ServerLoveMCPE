@@ -7,6 +7,7 @@ use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerQuitEvent;
 use pocketmine\event\player\PlayerJoinEvent;
 use pocketmine\Player;
+use pocketmine\entity\Entity;
 use pocketmine\plugin\PluginBase;
 use pocketmine\Server;
 use pocketmine\utils\TextFormat;
