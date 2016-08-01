@@ -99,9 +99,7 @@ class Main extends PluginBase implements Listener{
         						$data->set("name", $name); 
         						$data->save();
         					}
-					}else{ 
-						$sender->sendMessage("§5Your lover is offline!");
-					}
+        				}
         			}else{
                 		$sender->sendMessage("§5You're not in love!");
                 		}
