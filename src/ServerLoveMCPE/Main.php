@@ -48,9 +48,8 @@ class Main extends PluginBase implements Listener{
     public function onJoin(PlayerJoinEvent $event){
         $data = new Config($this->getDataFolder() . "players/" . strtolower($event->getPlayer()->getName()) . ".yml", Config::YAML);
         if ($data->exists("partner")) {
-        	$lover = $event->getPlayer()->getName($data->get("partner"));
-        	if($lover->isOnline()){
-		}else{
+        	$partner = $this->getServer()->getPlayer($data->get("partner"));
+        	if(!$partner) {
 			if($data->exists("type")){ 
 				$type = $data->get("type");
 				$this->changePet($event->getPlayer(), $type);
@@ -69,12 +68,12 @@ class Main extends PluginBase implements Listener{
         switch ($command->getName()) {
             case "child":
                 if ($data->exists("partner")){
-                	$lover = $event->getPlayer()->getName($data->get("partner"));
-        		if($lover->isOnline()){
-        			$this->changePet($sender, "BabyVillager");
-                		$sender->sendMessage("§5You now have a baby!");
+                	$partner = $this->getServer()->getPlayer($data->get("partner"));
+        		if(!$partner) {
+        			$sender->sendMessage("§5Your lover is offline!");
 			}else{ 
-			$sender->sendMessage("§5Your lover is offline!");
+				$this->changePet($sender, "BabyVillager");
+                		$sender->sendMessage("§5You now have a baby!");
 			}
                 }else{
                 	$sender->sendMessage("§5You're not in love!");
@@ -83,8 +82,10 @@ class Main extends PluginBase implements Listener{
                 	case "name":
         		case "setname":
                 		if ($data->exists("partner")){
-                			$lover = $event->getPlayer()->getName($data->get("partner"));
-        				if($lover->isOnline()){
+                			$partner = $this->getServer()->getPlayer($data->get("partner"));
+        				if(!$partner) {
+        					$sender->sendMessage("§5Your lover is offline!");
+        				}else{	
         					if (isset($args[1])){
         						unset($args[0]);
         						$name = implode(" ", $args);
@@ -306,7 +307,9 @@ class Main extends PluginBase implements Listener{
 		if ($data->exists("partner")){
 			$this->disablePet($player);
 			$lover = $event->getPlayer()->getName($data->get("partner"));
-			if($lover->isOnline()){
+			$partner = $this->getServer()->getPlayer($data->get("partner"));
+        		if(!$partner) {
+        		}else{	
 				$data = new Config($this->getDataFolder() . "players/" . strtolower($lover) . ".yml", Config::YAML);
 				$lover->sendMessage("§5Your partner has left the server and the child in your left");
 				$type = $data->get("type");
