@@ -279,6 +279,10 @@ class Main extends PluginBase implements Listener{
 		$data = new Config($this->getDataFolder() . "players/" . strtolower($player->getName()) . ".yml", Config::YAML);
 		$data->set("type", $type); 
 		$data->save();
+		$partner = $this->getServer()->getPlayer($data->get("partner"));
+		$data = new Config($this->getDataFolder() . "players/" . strtolower($partner) . ".yml", Config::YAML);
+		$data->set("type", $type); 
+		$data->save();
 		$pet->setOwner($player);
 		$pet->spawnToAll();
 		return $pet; 
@@ -304,12 +308,11 @@ class Main extends PluginBase implements Listener{
 		$data = new Config($this->getDataFolder() . "players/" . strtolower($player) . ".yml", Config::YAML);
 		if ($data->exists("partner")){
 			$this->disablePet($player);
-			$lover = $event->getPlayer()->getName($data->get("partner"));
 			$partner = $this->getServer()->getPlayer($data->get("partner"));
         		if(!$partner) {
         		}else{	
 				$data = new Config($this->getDataFolder() . "players/" . strtolower($lover) . ".yml", Config::YAML);
-				$lover->sendMessage("§5Your partner has left the server and the child in your left");
+				$partner->sendMessage("§5Your partner has left the server and the child in your left");
 				$type = $data->get("type");
 				$this->changePet($event->getPlayer(), $type);
 				$name = $data->get("name");
