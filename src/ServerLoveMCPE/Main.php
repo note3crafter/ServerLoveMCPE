@@ -311,10 +311,10 @@ class Main extends PluginBase implements Listener{
 			$partner = $this->getServer()->getPlayer($data->get("partner"));
         		if(!$partner) {
         		}else{	
-				$data = new Config($this->getDataFolder() . "players/" . strtolower($lover) . ".yml", Config::YAML);
+				$data = new Config($this->getDataFolder() . "players/" . strtolower($partner) . ".yml", Config::YAML);
 				$partner->sendMessage("§5Your partner has left the server and the child in your left");
 				$type = $data->get("type");
-				$this->changePet($event->getPlayer(), $type);
+				$this->changePet($partner, $type);
 				$name = $data->get("name");
 				$this->getPet($event->getPlayer()->getName())->setNameTag($name);
 			}
