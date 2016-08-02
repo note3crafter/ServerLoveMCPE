@@ -316,7 +316,7 @@ class Main extends PluginBase implements Listener{
 				$type = $data->get("type");
 				$this->changePet($partner, $type);
 				$name = $data->get("name");
-				$this->getPet($event->getPlayer()->getName())->setNameTag($name);
+				$this->getPet($partner)->setNameTag($name);
 			}
 		}
 	}
