@@ -74,6 +74,10 @@ class Main extends PluginBase implements Listener{
 			}else{ 
 				$this->changePet($sender, "BabyVillager");
                 		$sender->sendMessage("§5You now have a baby!");
+                		$partner = $this->getServer()->getPlayer($data->get("partner"));
+				$data1 = new Config($this->getDataFolder() . "players/" . strtolower($partner) . ".yml", Config::YAML);
+				$data1->set("type", $type); 
+				$data1->save();
 			}
                 }else{
                 	$sender->sendMessage("§5You're not in love!");
@@ -279,10 +283,6 @@ class Main extends PluginBase implements Listener{
 		$data = new Config($this->getDataFolder() . "players/" . strtolower($player->getName()) . ".yml", Config::YAML);
 		$data->set("type", $type); 
 		$data->save();
-		$partner = $this->getServer()->getPlayer($data->get("partner"));
-		$data1 = new Config($this->getDataFolder() . "players/" . strtolower($partner) . ".yml", Config::YAML);
-		$data1->set("type", $type); 
-		$data1->save();
 		$pet->setOwner($player);
 		$pet->spawnToAll();
 		return $pet; 
