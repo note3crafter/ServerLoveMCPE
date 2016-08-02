@@ -45,7 +45,7 @@ class Main extends PluginBase implements Listener{
     public function onDisable(){
         $this->getLogger()->info(TextFormat::LIGHT_PURPLE . "[<3] You've broken up with the server.");
     }
-    public function onJoin(PlayerJoinEvent $event){
+    public function onJoin(PlayerJoinEvent $event){ //done
         $data = new Config($this->getDataFolder() . "players/" . strtolower($event->getPlayer()->getName()) . ".yml", Config::YAML);
         if ($data->exists("partner")) {
         	$partner = $this->getServer()->getPlayer($data->get("partner"));
@@ -66,7 +66,7 @@ class Main extends PluginBase implements Listener{
     	$player = $sender->getName();
         $data = new Config($this->getDataFolder() . "players/" . strtolower($sender->getName()) . ".yml", Config::YAML);
         switch ($command->getName()) {
-            case "child":
+            case "child": //bugs
                 if ($data->exists("partner")){
                 	$partner = $this->getServer()->getPlayer($data->get("partner"));
         		if(!$partner) {
@@ -124,8 +124,16 @@ then the administration can do its work");
                     $sender->sendMessage("§5[<3] YOU MUST USE THIS COMMAND IN GAME. SORRY.");
                     return true;
                 }
+                $loved = array_shift($args);
+                $lovedPlayer = $this->getServer()->getPlayer($loved);
+                $data1 = new Config($this->getDataFolder() . "players/" . strtolower($lovedPlayer) . ".yml", Config::YAML);
                 if ($data->exists("partner")) {
                     $sender->sendMessage("§5[<3] You already have a boyfriend or girlfriend!");
+                    return false;
+                }
+                if ($data1->exists("partner")) {
+                    $sender->sendMessage("§5[<3] your lover already have a boyfriend or girlfriend!");
+                    return false;
                 }
                 
                 $loved = array_shift($args);
