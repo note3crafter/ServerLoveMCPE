@@ -76,7 +76,7 @@ class Main extends PluginBase implements Listener{
                 		$sender->sendMessage("§5You now have a baby!");
                 		$partner = $this->getServer()->getPlayer($data->get("partner"));
 				$data1 = new Config($this->getDataFolder() . "players/" . strtolower($partner) . ".yml", Config::YAML);
-				$data1->set("type", $type); 
+				$data1->set("type", "BabyVillager"); 
 				$data1->save();
 			}
                 }else{
