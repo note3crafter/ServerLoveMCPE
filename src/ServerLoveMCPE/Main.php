@@ -310,7 +310,7 @@ then the administration can do its work");
 	public function onPlayerQuit(PlayerQuitEvent $event) {
 		$player = $event->getPlayer();
 		$data = new Config($this->getDataFolder() . "players/" . strtolower($event->getPlayer()->getName()) . ".yml", Config::YAML);
-		if ($data->exists("partner")){
+		if ($data->exists("type")){
 			$this->disablePet($player);
 			$partner = $this->getServer()->getPlayer($data->get("partner"));
         		if(!$partner) {
