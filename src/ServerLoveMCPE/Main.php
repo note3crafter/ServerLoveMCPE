@@ -67,6 +67,7 @@ class Main extends PluginBase implements Listener{
         $data = new Config($this->getDataFolder() . "players/" . strtolower($sender->getName()) . ".yml", Config::YAML);
         switch ($command->getName()) {
             case "child":
+            	if ($data->exists("type")){
                 if ($data->exists("partner")){
                 	$partner = $this->getServer()->getPlayer($data->get("partner"));
         		if(!$partner) {
@@ -81,6 +82,10 @@ class Main extends PluginBase implements Listener{
                 }else{
                 	$sender->sendMessage("§5You're not in love!");
                 }
+            	}else{
+                	$sender->sendMessage("§5You already have a baby");
+                }
+                
                 switch (strtolower($args[0])){
                 	case "name":
         		case "setname":
@@ -92,15 +97,18 @@ class Main extends PluginBase implements Listener{
         					if (isset($args[1])){
         						unset($args[0]);
         						$name = implode(" ", $args);
-        						$this->getPet($sender->getName())->setNameTag($name);
-        						$sender->sendMessage("your baby's name is now ".$name);
+        						$sender->sendMessage("§5your baby's name is now ".$name);
+        						$sender->sendMessage("§5leave the game and come back
+then the administration can do its work");
         						$data = new Config($this->getDataFolder() . "players/" . strtolower($sender->getName()) . ".yml", Config::YAML);
         						$data->set("name", $name); 
         						$data->save();
-        						$lover->sendMessage("your baby's name is now ".$name);
-        						$data = new Config($this->getDataFolder() . "players/" . strtolower($lover->getName()) . ".yml", Config::YAML);
-        						$data->set("name", $name); 
-        						$data->save();
+        						$partner->sendMessage("your baby's name is now ".$name);
+        						$partner->sendMessage("§5leave the game and come back
+then the administration can do its work");
+        						$data1 = new Config($this->getDataFolder() . "players/" . strtolower($data->get("partner") . ".yml", Config::YAML);
+        						$data1->set("name", $name); 
+        						$data1->save();
         					}
         				}
         			}else{
@@ -304,7 +312,7 @@ class Main extends PluginBase implements Listener{
 	}
 	public function onPlayerQuit(PlayerQuitEvent $event) {
 		$player = $event->getPlayer();
-		$data = new Config($this->getDataFolder() . "players/" . strtolower($player) . ".yml", Config::YAML);
+		$data = new Config($this->getDataFolder() . "players/" . strtolower($event->getPlayer()->getName()) . ".yml", Config::YAML);
 		if ($data->exists("partner")){
 			$this->disablePet($player);
 			$partner = $this->getServer()->getPlayer($data->get("partner"));
