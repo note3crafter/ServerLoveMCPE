@@ -195,6 +195,8 @@ then the administration can do its work");
                     $data->remove("type");
                     $data->remove("name");
                     $data->save();
+                    $this->disablePet($player);
+                    $this->disablePet($lovedPlayer);
                     $this->getServer()->broadcastMessage("§d[<3]§a" . $sender->getName() . " §dhas broken up with §a" . $loved . "§d.");
                     return true;
                 } else {
