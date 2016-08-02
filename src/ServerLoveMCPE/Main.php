@@ -99,6 +99,7 @@ then the administration can do its work");
         						$data = new Config($this->getDataFolder() . "players/" . strtolower($sender->getName()) . ".yml", Config::YAML);
         						$data->set("name", $name); 
         						$data->save();
+        						
         						$partner->sendMessage("§5your baby's name is now ".$name);
         						$partner->sendMessage("§5leave the game and come back
 then the administration can do its work");
