@@ -280,9 +280,9 @@ class Main extends PluginBase implements Listener{
 		$data->set("type", $type); 
 		$data->save();
 		$partner = $this->getServer()->getPlayer($data->get("partner"));
-		$data = new Config($this->getDataFolder() . "players/" . strtolower($partner) . ".yml", Config::YAML);
-		$data->set("type", $type); 
-		$data->save();
+		$data1 = new Config($this->getDataFolder() . "players/" . strtolower($partner) . ".yml", Config::YAML);
+		$data1->set("type", $type); 
+		$data1->save();
 		$pet->setOwner($player);
 		$pet->spawnToAll();
 		return $pet; 
