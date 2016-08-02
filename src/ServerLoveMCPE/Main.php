@@ -67,7 +67,6 @@ class Main extends PluginBase implements Listener{
         $data = new Config($this->getDataFolder() . "players/" . strtolower($sender->getName()) . ".yml", Config::YAML);
         switch ($command->getName()) {
             case "child":
-            	if ($data->exists("type")){
                 if ($data->exists("partner")){
                 	$partner = $this->getServer()->getPlayer($data->get("partner"));
         		if(!$partner) {
@@ -75,6 +74,7 @@ class Main extends PluginBase implements Listener{
 			}else{ 
 				$this->changePet($sender, "BabyVillager");
                 		$sender->sendMessage("§5You now have a baby!");
+                		$sender->sendMessage("§5You can have a maximum of 1 infant!");
 				$data1 = new Config($this->getDataFolder() . "players/" . strtolower($data->get("partner")) . ".yml", Config::YAML);
 				$data1->set("type", "BabyVillager"); 
 				$data1->save();
@@ -82,10 +82,6 @@ class Main extends PluginBase implements Listener{
                 }else{
                 	$sender->sendMessage("§5You're not in love!");
                 }
-            	}else{
-                	$sender->sendMessage("§5You already have a baby");
-                }
-                
                 switch (strtolower($args[0])){
                 	case "name":
         		case "setname":
