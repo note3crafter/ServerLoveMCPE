@@ -41,6 +41,7 @@ abstract class Child extends Creature {
 				$pk->yaw = $this->yaw;
 				$pk->pitch = $this->pitch;
 				$pk->metadata = $this->dataProperties;
+				$pk->->setDataProperty(14, Entity::DATA_TYPE_BYTE, 1); 
 				if (static::NETWORK_ID == 66){
 					$pk->metadata = [
 							15 => [0,1],
