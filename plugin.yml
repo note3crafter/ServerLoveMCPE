@@ -1,6 +1,6 @@
 name: ServerLoveMCPE
 main: ServerLoveMCPE\Main
-version: 3.2.2
+version: 3.2.3
 api: [2.0.0, 2.1.0, 3.0.0-ALPHA1, 3.0.0-ALPHA2, 3.0.0-ALPHA3]
 load: POSTWORLD
 author: TheDeibo
