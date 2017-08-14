@@ -66,8 +66,21 @@ class Main extends PluginBase implements Listener{
                             $this->getServer()->broadcastMessage("§d♥" . $loved . "§d ♥ " . $sender->getName() . "§d♥");
                             
                             /*nametag thing */
-                            $sender->setDisplayName(TextFormat::LIGHT_PURPLE . "[<3]".$sender->getDisplayName());
-                            $lovedPlayer->setDisplayName(TextFormat::LIGHT_PURPLE . "[<3]".$lovedPlayer->getDisplayName());
+                            $n =
+                            $checkforhearts1 = stripos("[<3]", $sender->getName());
+                            $checkforhearts2 = stripos("[<3]", $lovedplayer->getName());   
+                            if($checkforhearts1 !== false){
+                                return true;
+                            
+                            }else{
+                                $sender->setDisplayName(TextFormat::LIGHT_PURPLE . "[<3]".TextFormat::WHITE .$sender->getDisplayName());
+                            }
+                            if($checkforhearts2 !== false) {        
+                           return true;
+                            }else{
+                                $lovedPlayer->setDisplayName(TextFormat::LIGHT_PURPLE. "[<3]".TextFormat::WHITE. $lovedPlayer->getDisplayName());
+                            }
+                        
                             /*nametag thing */
                             
                             return true;
