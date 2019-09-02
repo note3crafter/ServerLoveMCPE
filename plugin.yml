@@ -1,7 +1,7 @@
 name: ServerLoveMCPE
 main: ServerLoveMCPE\Main
 version: 3.2.4
-api: [3.0.0-ALPHA7]
+api: [3.9]
 load: POSTWORLD
 author: TheDeibo
 description: Add a little romance to your server!
